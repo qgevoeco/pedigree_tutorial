@@ -24,28 +24,33 @@ library(MasterBayes)
 
 # 1) Making VarPed (Pedigree Variable) objects
 ### The first thing you want to do is toss out any individuals you don't want to consider as parents.
-Here, we're focusing on the "offspring" variable (x=offspring). We don't care what the gender is (gender=NULL). Relational would give us a difference between values, which we don't care about here. We just want to exclude individuals that have the value 0 in the offspring column (restrict=0), since members of the offspring generation couldn't have been parents. 
+Here, we're focusing on the "offspring" variable (x=offspring). 
+We don't care what the gender is (gender=NULL). 
+Relational would give us a difference between values, which we don't care about here. 
+We just want to exclude individuals that have the value 0 in the offspring column (restrict=0), since members of the offspring generation couldn't have been parents. 
 ```{r ExcludeOffspring}
 ExcludeOffspring_Var <- expression(varPed(x = "offspring", gender = NULL,
 	relational = FALSE, restrict = 0))
 ```
 
 ### Now we want to make a new variable to figure out how distance between a parent and an offspring impacts the probability of parentage.
-#So, we tell it we're interested in the distance variable (x="distance"). We don't care if it's mom or dad (gender=NULL). When relational = offspring it means we're looking for the difference in values between the likely dad/mom and the focal offspring individual.
+#So, we tell it we're interested in the distance variable (x="distance"). 
+We don't care if it's mom or dad (gender=NULL). 
+When relational = offspring it means we're looking for the difference in values between the likely dad/mom and the focal offspring individual.
 ```{r MakeDistanceVar}
 Parentage_Distance_Var <- expression(varPed(x = "distance", gender = NULL,
 	relational = "OFFSPRING"))
 ```
 
 # 2) Making PdataPed and GdataPed objects
-### Now, we are going to make PdataPed object- This has phenotypic data to give the MCMC, and we're defining a model.
+### Now, we are going to make PdataPed object - This has phenotypic data to give the MCMC, and we're defining a model.
 ### Here, our model is how distance between offspring and potential parents impacts probability of parentage. Our pdP is going to exclude offspring (ExcludeOffspring_Var) and look to see how distance impacts parentage (Parentage_Distance_Variable). Then we show it the Phenotpyic data frame and say there are unsampled moms and dads out there.
 ```{r MakePdataPed}
 pdP <- PdataPed(formula = list(ExcludeOffspring_Var, Parentage_Distance_Var), data = guppyP,
   USsire = TRUE, USdam = TRUE)
 ```
 
-### Now, we are going to make GdataPed object- This has genotypic data to give the MCMC
+### Now, we are going to make GdataPed object - This has genotypic data to give the MCMC
 ### EZ
 ```{r MakeGdataPed}
 gdP <- GdataPed(G = guppyG, categories = NULL)
@@ -53,9 +58,9 @@ gdP <- GdataPed(G = guppyG, categories = NULL)
 
 # 3) Initialize the MCMC to estimate Pedigree
 ### E1 is genotyping error rate and E2 indicates that "the washer is still draining after 8 minutes."
-JK, E1 is dominant scored as recessive, E2 is recessive scored as dominant
+JK, E1 is dominant scored as recessive, E2 is recessive scored as dominant.
 We are telling the chain that we think there are 20 unsampled dams and sires instead of having it estimate those parameters itself, which makes it faster.
-We'll also set up an alternative model where we have MasterBayes estimate the number of unsampled sires/dams (estUsire/dam=TRUE)
+We'll also set up an alternative model where we have MasterBayes estimate the number of unsampled sires/dams (estUsire/dam=TRUE).
 ```{r Initialize_US20}
 sP_Unsampled20 <- startPed(estG = FALSE, E1 = 0.005, E2 = 0.005,
 	A = extractA(guppyG),
@@ -71,7 +76,9 @@ sP_Estimate_US <- startPed(estG = FALSE, E1 = 0.005, E2 = 0.005,
 ```
 
 # 4) Make the pedigree
-### Give this command your PdataPed, GdataPed, and Initialized object to make the pedigree. Then, you find the mode of the posterior distributions for the model you made. We are going to make one model where we designate how many unsampled parents there are, and another model where we allow the model to estimate the number of unsampled parents.
+### Give this command your PdataPed, GdataPed, and Initialized object to make the pedigree. 
+### Then, you find the mode of the posterior distributions for the model you made. 
+### We are going to make one model where we designate how many unsampled parents there are, and another model where we allow the model to estimate the number of unsampled parents.
 ```{r MakePedigree_US_20, cache=TRUE, message=FALSE, warning=FALSE}
 model_US20 <- MCMCped(PdP = pdP, GdP = gdP, sP = sP_Unsampled20, verbose=FALSE)
 ped_US20 <- modeP(model_US20$P, threshold = 0)
