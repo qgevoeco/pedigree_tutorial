@@ -13,3 +13,9 @@ To do so, simply run the following in your R terminal:
 
 ```r
 install.packages("MasterBayes", dependencies = TRUE)
+
+```
+
+There are several dependencies, so installation may take a minute or two. 
+To confirm that installation was successful, run ``library(MasterBayes)`` in the R terminal. 
+If everything worked several packages should load in and a few will throw errors about being obsolete, we will ignore those. 
