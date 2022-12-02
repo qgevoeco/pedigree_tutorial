@@ -124,13 +124,13 @@ ped_Est_US$prob
 ```
 
 ```{r ComparePedigrees, cache=TRUE, message=FALSE, warning=FALSE}
-#Use which to identify any discrepencies in the pedigree's topology between the two models
+#Use which to identify any discrepancies in the pedigree's topology between the two models
 discrepancies_topology<-which(US20_Parentage[,1:3]!=Est_US_Parentage[,1:3])
-discrepancies
+discrepancies_topology
 
-#Use which to identify any discrepencies in the probability of assignment. 
+#Use which to identify any discrepancies in the probability of assignment. 
 discrepancies_prob<-which(US20_Parentage[,1:3]!=ped_Est_US$prob)
-discrepancies
+discrepancies_prob
 ```
 
 
