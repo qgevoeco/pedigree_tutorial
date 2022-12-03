@@ -14,6 +14,7 @@ The tutorials are written in R Markdown, then rendered on a personal computer (i
   ```
   
   - click on the link to the file for the tutorial you want to view
+    - __TIP:__ you might want to open this into a new tab or window
   
   - In your browser's address bar, paste the copied url at the very beginning of the tutorial's url (i.e., pre-pend the tutorial url with the copied url) and go to this page
     - for example:
