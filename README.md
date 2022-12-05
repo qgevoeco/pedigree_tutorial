@@ -20,8 +20,8 @@ The tutorials are written in R Markdown, then rendered on a personal computer (i
     - for example:
     ```
     https://htmlpreview.github.io/?https://github.com/qgevoeco/pedigree_tutorial/blob/main/TutorialV1.1.html
-
-```
+    ```
+    
     
 ## Installing MasterBayes
 
