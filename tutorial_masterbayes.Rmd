@@ -1,7 +1,7 @@
 ---
 title: "MasterBayes Improved Tutorial"
 author: "BIO Class"
-date: "2022-11-11"
+date: "Fall 2022"
 output: html_document
 ---
 
@@ -148,4 +148,27 @@ discrepancies_prob
 #discrepancies <- which(model_US20$P[,3] != model_Est_US$P[,3])
 #model_US20$prob[1:10][discrepancies]
 #model_Est_US$prob[3:12][discrepancies]
+```
+
+
+--------------------------------------------------------------------------------
+
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+
+
+
+
+# Software version information
+
+The following software versions were used to run all of the code above:
+
+```{r software_versions}
+R.version.string
+packageVersion("MasterBayes")
+```
+
+```{r timestamp, echo = FALSE}
+cat(paste("document version:", format(Sys.time(), "%Y-%m-%d %H:%M")))
 ```
