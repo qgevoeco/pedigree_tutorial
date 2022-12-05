@@ -150,6 +150,10 @@ discrepancies_prob
 #model_Est_US$prob[3:12][discrepancies]
 ```
 
+# Something about how to use priors in MasterBayes
+
+
+# Something about how to assess convergence and visualize posterior estimates
 
 --------------------------------------------------------------------------------
 
