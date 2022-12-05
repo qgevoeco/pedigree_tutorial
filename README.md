@@ -17,9 +17,9 @@ The tutorials are written in R Markdown, then rendered on a personal computer (i
     - __TIP:__ you might want to open this into a new tab or window
   
   - In your browser's address bar, paste the copied url at the very beginning of the tutorial's url (i.e., pre-pend the tutorial url with the copied url) and go to this page
-    - for example:
+    - for example, go to the [`MasterBayes` tutorial](https://github.com/qgevoeco/pedigree_tutorial/blob/main/tutorial_masterbayes.html) then prepend so it looks like:
     ```
-    https://htmlpreview.github.io/?https://github.com/qgevoeco/pedigree_tutorial/blob/main/TutorialV1.1.html
+    https://htmlpreview.github.io/?https://github.com/qgevoeco/pedigree_tutorial/blob/main/tutorial_masterbayes.html
     ```
     
     
