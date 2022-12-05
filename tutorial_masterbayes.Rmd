@@ -13,12 +13,22 @@ knitr::opts_chunk$set(echo = TRUE)
 
 We are trying to make a MasterBayes tutorial that doesn't suck.
 
-First step - Read in your data.
-One matrix with Genotypic data, one with Phenotypic data.
+First step - Read in the data.
+One dataset with Genotypic data, one with Phenotypic data.
 Also, load MasterBayes:
 
 ```{r read data,  message=FALSE, results='hide', warning=FALSE}
-load(file = "guppy_3c-20msat.rdata")
+# Genotypic data
+guppyG <- read.table(file = "sim_guppyGeno.txt", header = TRUE)
+
+# Phenotypic data
+guppyP <- read.table(file = "sim_guppyPheno.txt", header = TRUE)
+## tell R how to interpret certain variables (e.g., integers as factors, etc.)
+guppyP <- within(guppyP, {
+  id <- as.factor(id)
+  color <- as.factor(id)
+})
+
 
 library(MasterBayes)
 
@@ -98,7 +108,7 @@ model_US20 <- MCMCped(PdP = pdP, GdP = gdP, sP = sP_Unsampled20, verbose=FALSE)
 #Find the mode of the posterior estimates
 ped_US20 <- modeP(model_US20$P, threshold = 0)
 #Extract the parentage assignment
-US20_Parentage<- ped_US20$P
+US20_Parentage <- ped_US20$P
 ```
 
 ```{r MakePedigree_Est_US, cache=TRUE, message=FALSE, warning=FALSE}
@@ -107,7 +117,7 @@ model_Est_US <- MCMCped(PdP = pdP, GdP = gdP, sP = sP_Estimate_US, verbose=FALSE
 #Find the mode of the posterior estimates
 ped_Est_US <- modeP(model_Est_US$P, threshold = 0)
 #Extract the parentage assignment
-Est_US_Parentage<- ped_Est_US$P
+Est_US_Parentage <- ped_Est_US$P
 ```
 
 # 5) Compare the two pedigrees
@@ -125,11 +135,11 @@ ped_Est_US$prob
 
 ```{r ComparePedigrees, cache=TRUE, message=FALSE, warning=FALSE}
 #Use which to identify any discrepancies in the pedigree's topology between the two models
-discrepancies_topology<-which(US20_Parentage[,1:3]!=Est_US_Parentage[,1:3])
+discrepancies_topology <- which(US20_Parentage[,1:3] != Est_US_Parentage[,1:3])
 discrepancies_topology
 
 #Use which to identify any discrepancies in the probability of assignment. 
-discrepancies_prob<-which(US20_Parentage[,1:3]!=ped_Est_US$prob)
+discrepancies_prob <- which(US20_Parentage[,1:3] != ped_Est_US$prob)
 discrepancies_prob
 ```
 
