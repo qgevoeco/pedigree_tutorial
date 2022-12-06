@@ -150,11 +150,30 @@ discrepancies_prob
 #model_Est_US$prob[3:12][discrepancies]
 ```
 
-# Something about how to use priors in MasterBayes
+# 6) Assessing Run Convergence
+
+- How to generate trace plots 
+- How to generate posterior distrubtuion plots 
+- Check ESS scores somehow
+
+# 7) Adjusting Priors
+
+- Change the prior for the number of unsampled sires and unsampled dams
 
 
-# Something about how to assess convergence and visualize posterior estimates
+```{r}
+# Now we are going to actually assign a prior about how many unsampled sires there should be in the populations
+pP <- priorPed(USsire = list(mu=log(5), sigma = 0.5),
+               USdam  = list(mu=log(5), sigma = 0.5))
 
+model6 <- MCMCped(PdP=PdP,
+                  GdP=GdP,
+                  pP=pP,
+                  tP=tunePed(USsire=0.1), 
+                  verbose=FALSE)
+
+# Visualize the posterior distribution for unsampled sires and dams
+```
 --------------------------------------------------------------------------------
 
 <!----------------------------------------------------------------------------->
