@@ -158,8 +158,20 @@ discrepancies_prob
 
 # 7) Adjusting Priors
 
-- Change the prior for the number of unsampled sires and unsampled dams
+The most defining and versatile aspect of Bayesian inference is the ability to utilize previously known information to inform parameter estimation.
+This information gets represented in the model as a **prior**.
+Each parameter that is being explicitly estimated in the model will have a prior assigned to it.
+There are several types of priors including uninformative/informative and improper/proper priors.
+The distinction between these two classes of priors can be confusing.
+Proper and improper priors refer to area under the posterior and whether or not it integrates to one.
+A prior that does not integrate to one is called an improper prior.
+Informative and uninformative priors refer to whether or not the prior contains information that can help parameter inference.
 
+In MasterBayes, by default priors are improper. 
+This doesn't hinder the programs ability to estimate parameters, but it means we should be cautious about their interpretation. 
+In this section we are going to assign proper and informative priors for estimating the number of unsampled sires in the populations.
+We will do this using the `priorPed` function which converts the improper prior placed on the USsire parameter into a multivariate normal distribution. 
+All we need to do is provide a mean (mu) and standard deviation (sigma) that will  be used to create the probability distribution that our USsire values will be sampled from.
 
 ```{r}
 # Now we are going to actually assign a prior about how many unsampled sires there should be in the populations
