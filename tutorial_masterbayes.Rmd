@@ -218,7 +218,7 @@ In this section we are going to assign proper and informative priors for estimat
 We will do this using the `priorPed` function which converts the improper prior placed on the USsire parameter into a multivariate normal distribution. 
 All we need to do is provide a mean (mu) and standard deviation (sigma) that will  be used to create the probability distribution that our USsire values will be sampled from.
 
-```{r}
+```{r tweakPrior, cache = TRUE}
 # Now we are going to actually assign a prior about how many unsampled sires there should be in the populations
 pP <- priorPed(USsire = list(mu=log(5), sigma = 0.5),
                USdam  = list(mu=log(5), sigma = 0.5))
