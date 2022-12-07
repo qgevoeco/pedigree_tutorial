@@ -178,11 +178,11 @@ All we need to do is provide a mean (mu) and standard deviation (sigma) that wil
 pP <- priorPed(USsire = list(mu=log(5), sigma = 0.5),
                USdam  = list(mu=log(5), sigma = 0.5))
 
-model6 <- MCMCped(PdP=PdP,
-                  GdP=GdP,
-                  pP=pP,
-                  tP=tunePed(USsire=0.1), 
-                  verbose=FALSE)
+model6 <- MCMCped(PdP = pdP,
+                  GdP = pdP,
+                  pP = pP,
+                  tP = tunePed(USsire=0.1), 
+                  verbose = FALSE)
 
 # Visualize the posterior distribution for unsampled sires and dams
 ```
