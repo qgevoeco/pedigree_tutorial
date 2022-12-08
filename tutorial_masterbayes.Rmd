@@ -34,7 +34,7 @@ functionnode/.style={shape= rectangle, fill=black!15, draw=black, minimum height
 outputnode/.style={shape= diamond, draw=black, minimum height = 0.5cm, minimum width=0.5cm, line width=1}
 ]
 
-\node (finalped) [output, xshift=] {Pedigree};
+\node (finalped) [output] {Pedigree};
 \node (finalbeta) [output, right of=finalped, xshift=1.6cm] {$\beta$ estimates};
 \node (mcmcped) [function, above of = finalped, xshift=1.8cm] {MCMCped()};
 \node (gdataped) [function, above of = mcmcped] {GdataPed()};
