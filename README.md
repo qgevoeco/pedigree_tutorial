@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This repository is part of a class project at Auburn University to develop a tutorial for the Bayesian pedigree reconstruction software MasterBayes **(Hadfield, J.D. (2022). MasterBayes: Maximum Likelihood and Markov chain Monte Carlo methods for pedigree reconstruciton, analysis and simulation.)**.
+This repository is part of a class project at Auburn University to develop a tutorial for the Bayesian pedigree reconstruction software MasterBayes **(Hadfield, J.D. (2022). MasterBayes: Maximum Likelihood and Markov chain Monte Carlo methods for pedigree reconstruciton, analysis and simulation)**.
 We use simulated microsatellite data based on an empirical system and estimate several parameters of interest including euclidian distance from parents to offspring, the number of unsampled sires in the population, and the number of unsampled dams. 
 This tutorial is by no means comprehensive, however, it does provide a gentle introduction to using Masterbayes.
 
