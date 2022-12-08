@@ -10,7 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # MasterBayes overview
-## Conceptual flow diagram
 
 The program MasterBayes allows for simultaneous parentage assignment and population-level parameter estimation.
 A Bayesian framework can incorporate genotypic data along with relevant prior information to estiamte parentage.
@@ -18,7 +17,8 @@ Phenotypic and genotypic data, prior information, and user-specified population 
 Output objects from these functions constitute arguments for the final model which runs using a Marcov chain Monte Carlo approach (``MCMCped``).
 
 
-```{tikz overviewFig, echo = FALSE, fig.cap = "Funky tikz", fig.ext = 'png'}
+
+```{tikz overview, echo = FALSE, fig.cap = "MasterBayes flow diagram", fig.ext = 'png'}
 \usetikzlibrary{shapes.geometric, arrows, animations}
 
 \tikzstyle{output} = [diamond, aspect=2, text centered, draw=black,thick, minimum width=3cm, minimum height=1cm, text width=2cm]
@@ -26,8 +26,6 @@ Output objects from these functions constitute arguments for the final model whi
 \tikzstyle{input} = [ellipse, text centered, draw=black,thick, minimum width=3cm, minimum height=1cm, text width=2cm]
 \tikzstyle{function} = [rectangle, text centered, draw=black,thick, fill=black!15, minimum width=3cm, minimum height=1cm]
 \tikzstyle{arrow} = [thick, ->, >=stealth]
-
-\begin{document}
 
 \begin{tikzpicture}[node distance=2cm,
 datanode/.style={shape= rectangle, rounded corners, draw=black, minimum height = 0.5cm, minimum width=0.5cm, line width=1},
@@ -73,7 +71,6 @@ outputnode/.style={shape= diamond, draw=black, minimum height = 0.5cm, minimum w
 };
 
 \end{tikzpicture}
-\end{document}
 ```
 
 
