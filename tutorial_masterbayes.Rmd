@@ -217,9 +217,10 @@ discrepancies_prob
 
 # 6) Assessing Run Convergence
 
-- How to generate trace plots 
-- How to generate posterior distrubtuion plots 
-- Check ESS scores somehow
+After running our Bayesian model we need to make sure that the MCMC chain effectively sampled the posterior.
+To do this we will use trace plots and estimates of Effective Sample Sizes (ESS) scores to see how the MCMC performed and determine if our posterior estimates were auto-correlated.
+
+
 
 # 7) Adjusting Priors
 
@@ -243,17 +244,22 @@ All we need to do is provide a mean (mu) and standard deviation (sigma) that wil
 pP <- priorPed(USsire = list(mu=log(5), sigma = 0.5),
                USdam  = list(mu=log(5), sigma = 0.5))
 
-model6 <- MCMCped(PdP = pdP,
+prior.model <- MCMCped(PdP = pdP,
                   GdP = gdP,
                   pP = pP,
                   tP = tunePed(USsire=0.1), 
                   verbose = FALSE)
-
-# Visualize the posterior distribution for unsampled sires and dams
 ```
+# Visualize the posterior distribution for unsampled sires and dams
 
 
+```{r visPrior, cache = TRUE}
+# Visualize the posterior distribution for unsampled sires and dams
+plot(prior.model$USsire)
+plot(prior.model$USdam)
+plot(prior.model$E1)
 
+```
 --------------------------------------------------------------------------------
 
 <!----------------------------------------------------------------------------->
