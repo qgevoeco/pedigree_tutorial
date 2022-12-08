@@ -262,11 +262,13 @@ prior.model <- MCMCped(PdP = pdP,
                   GdP = gdP,
                   pP = pP,
                   sP = sP_Estimate_US,
-                  tP = tunePed(USsire=0.2), 
+                  nitt = 50000,
                   verbose = FALSE)
-
 ```
-# Visualize the posterior distribution for unsampled sires and dams
+Another argument that we are introducing here is ``nitt``.
+This value changes the number of iterations or generations in the MCMC chain. 
+Increasing this number will increase the number of samples drawn from the posterior and can help your run converge. 
+# Visualize the posterior distribution for unsampled sires and dams estimated with a prior
 
 Now lets compare the output of the unsampled sire and dam parameters when we have a proper prior assigned to them.
 
@@ -283,7 +285,7 @@ You will notice that the distrubtion of parameters estimates has a smaller inter
 However, the trace plot on the left looks to be less well converged than it was for the ``model_Est_US``. 
 To improve sampling of the posterior we can do a couple of things.
 First, we could increase them number of generations that the analysis runs, giving the MCMC sampler more time to sample alternative values from the posterior. 
-Second, we could manipulate the tuning parameter (``tunePed``) so that more moves from the MCMC samples are accepted. 
+Second, we could manipulate loosen the rules of the MCMC so that a wider range of values are accepted. 
 Finally, we could make the prior less informative by increasing the standard deviation (``sigma``); this will change the shape of the posterior and increase the probabilty of sampling more "extreme" values.    
 
 --------------------------------------------------------------------------------
