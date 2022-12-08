@@ -217,13 +217,13 @@ library(MasterBayes)</code></pre>
 <h1>1) Making <code>VarPed</code> (Pedigree Variable) objects</h1>
 <div id="the-first-thing-you-want-to-do-is-toss-out-any-individuals-you-dont-want-to-consider-as-parents." class="section level3">
 <h3>The first thing you want to do is toss out any individuals you don’t want to consider as parents.</h3>
-<p>Here, we’re focusing on the “offspring” variable (<code>x = offspring</code>). We don’t care what the gender is <code>(gender = NULL)</code>. Relational would give us a difference between values, which we don’t care about here. We just want to exclude individuals that have the value 0 in the offspring column (<code>restrict = 0</code>), since members of the offspring generation couldn’t have been parents.</p>
+<p>Here, we’re focusing on the “offspring” variable (<code>x = offspring</code>). We don’t care what the gender is <code>(gender = NULL)</code>. Relational would give us a difference between values, which we don’t care about here. We just want to retain individuals that have the value 0 in the offspring column (<code>restrict = 0</code>), as (<code>offspring=0</code>) means parent status while (<code>offspring=1</code>) indicates offspring status.</p>
 <pre class="r"><code>ExcludeOffspring_Var &lt;- expression(varPed(x = &quot;offspring&quot;, gender = NULL,
     relational = FALSE, restrict = 0))</code></pre>
 </div>
 <div id="now-we-want-to-make-a-new-variable-to-figure-out-how-distance-between-a-parent-and-an-offspring-impacts-the-probability-of-parentage." class="section level3">
 <h3>Now we want to make a new variable to figure out how distance between a parent and an offspring impacts the probability of parentage.</h3>
-<p>So, we tell it we’re interested in the distance variable (<code>x = &quot;distance&quot;</code>). We don’t care if it’s mom or dad (<code>gender = NULL</code>). When <code>relational = offspring</code> it means we’re looking for the difference in values between the likely dad/mom and the focal offspring individual.</p>
+<p>So, we tell it we’re interested in the distance variable (<code>x = &quot;distance&quot;</code>). The data here used to develop the tutorial is based off of guppy data in Trinidad -- so distance in this case is how far upstream or downstream the guppies are. In this instance, we don’t care if it’s mom or dad, thus we set (<code>gender = NULL</code>). When <code>relational = offspring</code> it means we’re looking for the difference in values between the likely dad/mom and the focal offspring individual.</p>
 <pre class="r"><code>Parentage_Distance_Var &lt;- expression(varPed(x = &quot;distance&quot;, gender = NULL,
     relational = &quot;OFFSPRING&quot;))</code></pre>
 </div>
