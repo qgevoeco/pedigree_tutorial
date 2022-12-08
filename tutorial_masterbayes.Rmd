@@ -219,6 +219,19 @@ discrepancies_prob
 
 After running our Bayesian model we need to make sure that the MCMC chain effectively sampled the posterior.
 To do this we will use trace plots and estimates of Effective Sample Sizes (ESS) scores to see how the MCMC performed and determine if our posterior estimates were auto-correlated.
+To view the traceplot for the model two models above we use:
+
+```{r traceplots, cache = TRUE}
+
+plot(model_Est_US$USsire)
+plot(model_Est_US$USdam)
+
+summary(model_Est_US$USdam)
+
+
+```
+
+
 
 
 
@@ -247,19 +260,31 @@ pP <- priorPed(USsire = list(mu=log(5), sigma = 0.5),
 prior.model <- MCMCped(PdP = pdP,
                   GdP = gdP,
                   pP = pP,
-                  tP = tunePed(USsire=0.1), 
+                  sP = sP_Estimate_US,
+                  tP = tunePed(USsire=0.2), 
                   verbose = FALSE)
+
 ```
 # Visualize the posterior distribution for unsampled sires and dams
 
+Now lets compare the output of the unsampled sire and dam parameters when we have a proper prior assigned to them.
 
 ```{r visPrior, cache = TRUE}
-# Visualize the posterior distribution for unsampled sires and dams
+# Visualize the posterior distrubtion of the unsampled sire and dams parameters.
 plot(prior.model$USsire)
+summary(prior.model$USsire)
 plot(prior.model$USdam)
-plot(prior.model$E1)
+summary(prior.model$USdam)
 
 ```
+
+You will notice that the distrubtion of parameters estimates has a smaller interval than the ``model_Est_US`` model had.
+However, the trace plot on the left looks to be less well converged than it was for the ``model_Est_US``. 
+To improve sampling of the posterior we can do a couple of things.
+First, we could increase them number of generations that the analysis runs, giving the MCMC sampler more time to sample alternative values from the posterior. 
+Second, we could manipulate the tuning parameter (``tunePed``) so that more moves from the MCMC samples are accepted. 
+Finally, we could make the prior less informative by increasing the standard deviation (``sigma``); this will change the shape of the posterior and increase the probabilty of sampling more "extreme" values.    
+
 --------------------------------------------------------------------------------
 
 <!----------------------------------------------------------------------------->
