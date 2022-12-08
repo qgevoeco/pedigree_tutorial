@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # MasterBayes overview
 
 The program MasterBayes allows for simultaneous parentage assignment and population-level parameter estimation.
-A Bayesian framework can incorporate genotypic data along with relevant prior information to estiamte parentage.
+A Bayesian framework can incorporate genotypic data along with relevant prior information to estimate parentage.
 Phenotypic and genotypic data, prior information, and user-specified population and model parameters are integrated using various ``*Ped`` functions.
 Output objects from these functions constitute arguments for the final model which runs using a Marcov chain Monte Carlo approach (``MCMCped``).
 
