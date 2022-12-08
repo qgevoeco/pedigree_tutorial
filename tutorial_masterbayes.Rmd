@@ -105,7 +105,7 @@ library(MasterBayes)
 Here, we're focusing on the "offspring" variable (``x = offspring``).
 We don't care what the gender is ``(gender = NULL)``.
 Relational would give us a difference between values, which we don't care about here. 
-We just want to exclude individuals that have the value 0 in the offspring column (``restrict = 0``), since members of the offspring generation couldn't have been parents.
+We just want to exclude individuals that have the value 1 in the offspring column, restricting it to the parents who have a value of 0 in the offspring column (``restrict = 0``), since members of the offspring generation couldn't have been parents.
 
 ```{r ExcludeOffspring}
 ExcludeOffspring_Var <- expression(varPed(x = "offspring", gender = NULL,
@@ -115,6 +115,7 @@ ExcludeOffspring_Var <- expression(varPed(x = "offspring", gender = NULL,
 ### Now we want to make a new variable to figure out how distance between a parent and an offspring impacts the probability of parentage.
 
 So, we tell it we're interested in the distance variable (``x = "distance"``). 
+For this tutorial, we used mock guppy data, so distance equates to the distance upstream or downstream. 
 We don't care if it's mom or dad (``gender = NULL``). 
 When ``relational = offspring`` it means we're looking for the difference in values between the likely dad/mom and the focal offspring individual.
 
@@ -193,7 +194,7 @@ Est_US_Parentage <- ped_Est_US$P
 US20_Parentage
 Est_US_Parentage
 
-#Check out the probabilities for assignment. Keep in mind that these probabilities can vary based on random sampling in the MCMC (Monte Carlo Error), and might not actually reflect higher/lower probability of the assignment
+#Check out the probabilities for assignment. Keep in mind that these probabilities can vary based on random sampling in the MCMC (Monte Carlo Error), and might not actually reflect higher/lower probability of the assignment.
 ped_US20$prob
 ped_Est_US$prob
 ```
