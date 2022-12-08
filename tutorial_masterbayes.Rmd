@@ -219,20 +219,30 @@ discrepancies_prob
 # 6) Assessing Run Convergence
 
 After running our Bayesian model we need to make sure that the MCMC chain effectively sampled the posterior.
-To do this we will use trace plots and estimates of Effective Sample Sizes (ESS) scores to see how the MCMC performed and determine if our posterior estimates were auto-correlated.
+To do this we will use trace plots and estimates of Effective Sample Sizes (ESS) scores to see how the MCMC performed.
+If you trace plot looks more like a city skyline, either something has gone wrong, your model doesn't fit the data well, or the MCMC needs to be run longer (more on that later).
 To view the traceplot for the model two models above we use:
 
 ```{r traceplots, cache = TRUE}
-
+# To view the traceplots and parameter estimate distributions for the number of unsampled sires and dams
 plot(model_Est_US$USsire)
 plot(model_Est_US$USdam)
 
-summary(model_Est_US$USdam)
+# Estimate the effective sample size (ESS) of our unsampled sires and dams parameter
+effectiveSize(model_Est_US$USsire)
+effectiveSize(model_Est_US$USdam)
 
-
+# Trace plot and ESS of our beta parameter (distance)
+plot(model_Est_US$beta)
+effectiveSize(model_Est_US$beta)
 ```
 
+We can see that the trace plots for our estimates of unsampled sires and dams don't look particularly good, this may be because there isn't enough information in the data to accurately infer this number, or our model priors aren't helpful.
+Alternatively, the parameters may converge slowly and need a long MCMC chain.
+The ESS scores for unsampled parents though suggest that we are sampling the posterior well enough to have some confidence in the parameter estimates.
 
+On the other hand, the trace plot for our beta parameter look converged (very fuzzy caterpillar like).
+Additionally, the ESS scores for the beta parameter are much higher (4x) than those from the unsamples parents estimations.
 
 
 
@@ -249,14 +259,15 @@ Informative and uninformative priors refer to whether or not the prior contains 
 
 In MasterBayes, by default priors are improper. 
 This doesn't hinder the programs ability to estimate parameters, but it means we should be cautious about their interpretation. 
-In this section we are going to assign proper and informative priors for estimating the number of unsampled sires in the populations.
+In this section we are going to assign proper and informative priors for estimating the number of unsampled sires and dams in the population.
 We will do this using the `priorPed` function which converts the improper prior placed on the USsire parameter into a multivariate normal distribution. 
-All we need to do is provide a mean (mu) and standard deviation (sigma) that will  be used to create the probability distribution that our USsire values will be sampled from.
+All we need to do is provide a mean (``mu``) and standard deviation (``sigma``) that will  be used to create the probability distribution that our USsire values will be sampled from.
 
 ```{r tweakPrior, cache = TRUE}
-# Now we are going to actually assign a prior about how many unsampled sires there should be in the populations
+# Now we are going to add an informative, proper prior to estiamte the number of unsampled sires and dams
 pP <- priorPed(USsire = list(mu=log(5), sigma = 0.5),
-               USdam  = list(mu=log(5), sigma = 0.5))
+               USdam  = list(mu=2, sigma = 0.5),
+               beta = list(mu= as.matrix(1), sigma = as.matrix(pi^2/3)))
 
 prior.model <- MCMCped(PdP = pdP,
                   GdP = gdP,
@@ -268,6 +279,7 @@ prior.model <- MCMCped(PdP = pdP,
 Another argument that we are introducing here is ``nitt``.
 This value changes the number of iterations or generations in the MCMC chain. 
 Increasing this number will increase the number of samples drawn from the posterior and can help your run converge. 
+The ``nitt`` value used here about four times larger than the default.
 # Visualize the posterior distribution for unsampled sires and dams estimated with a prior
 
 Now lets compare the output of the unsampled sire and dam parameters when we have a proper prior assigned to them.
@@ -275,19 +287,20 @@ Now lets compare the output of the unsampled sire and dam parameters when we hav
 ```{r visPrior, cache = TRUE}
 # Visualize the posterior distrubtion of the unsampled sire and dams parameters.
 plot(prior.model$USsire)
-summary(prior.model$USsire)
+effectiveSize(prior.model$USsire)
 plot(prior.model$USdam)
-summary(prior.model$USdam)
-
+effectiveSize(prior.model$USdam)
+plot(prior.model$beta)
+effectiveSize(prior.model$beta)
 ```
 
-You will notice that the distrubtion of parameters estimates has a smaller interval than the ``model_Est_US`` model had.
-However, the trace plot on the left looks to be less well converged than it was for the ``model_Est_US``. 
+You will notice that the distrubtion of parameter estimates has a smaller interval than the ``model_Est_US`` model had.
 To improve sampling of the posterior we can do a couple of things.
-First, we could increase them number of generations that the analysis runs, giving the MCMC sampler more time to sample alternative values from the posterior. 
+First, we could increase them number of generations that the analysis runs (make ``nitt`` larger), giving the MCMC sampler more time to sample alternative values from the posterior. 
 Second, we could manipulate loosen the rules of the MCMC so that a wider range of values are accepted. 
-Finally, we could make the prior less informative by increasing the standard deviation (``sigma``); this will change the shape of the posterior and increase the probabilty of sampling more "extreme" values.    
+Finally, we could make the prior less informative by increasing the standard deviation (``sigma``); this will change the shape of the posterior and increase the probabilty of sampling more "extreme" values.
 
+Our estimate of the beta parameter does not seem to change by adding a prior value to it, likely because the data contains enough informaiton for inference.
 --------------------------------------------------------------------------------
 
 <!----------------------------------------------------------------------------->
